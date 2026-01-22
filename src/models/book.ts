@@ -1,4 +1,4 @@
-import { Model, Schema, Document } from "mongoose";
+import mongoose, { Model, Schema, Document } from "mongoose";
 
 export interface Book extends Document {
   title: string;
@@ -30,4 +30,4 @@ const bookSchema = new Schema<Book>({
   },
 });
 
-export const book = new Model("Book", bookSchema);
+export const book = mongoose.model("Book", bookSchema);

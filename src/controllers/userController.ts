@@ -2,33 +2,25 @@ import type { Request, Response, NextFunction } from "express";
 import { userModel, type User } from "../models/user.js";
 import type { CallbackError, HydratedDocument } from "mongoose";
 
-const getUserById = async (
+export const getUserById = async (
   request: Request,
-  response: Response,
-  next: NextFunction,
+  response: Response
 ) => {
-  const id = request.params.id;
-
-  await userModel.findById(
-    id,
-    (err: CallbackError, foundUser: HydratedDocument<User>) => {
-      if (err) {
-        response.status(500).send("User not found");
-      } else {
-        response.status(200).json(foundUser);
-      }
-    },
-  );
-
-  next();
+  userModel.findById(request.params.id).then((user) => response.send(user));
 };
 
-const createUser = (
+export const createUser = async (
   request: Request,
-  response: Response,
-  next: NextFunction,
+  response: Response
 ) => {
-  // TODO: Create user
+  const user = new userModel({
+    firstName: request.body.firstName,
+    lastName: request.body.lastName,
+    password: request.body.password
+  });
 
-  next();
+  user
+    .save()
+    .then((savedUser) => response.status(200).json(savedUser))
+    .catch((err) => response.status(400).json({ error: err }));
 };
