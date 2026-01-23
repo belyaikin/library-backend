@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document } from "mongoose";
 
-export interface BookInformation extends Document {
+export interface Book extends Document {
   title: string;
   author: BookAuthor;
   yearPublished: number;
@@ -11,7 +11,7 @@ export interface BookAuthor extends Document {
   lastName: string;
 }
 
-const bookInformationSchema = new Schema<BookInformation>({
+const bookSchema = new Schema<Book>({
   title: {
     type: String,
     required: true,
@@ -33,8 +33,5 @@ const bookAuthorSchema = new Schema<BookAuthor>({
   },
 });
 
-export const bookInformation = mongoose.model(
-  "BookInformation",
-  bookInformationSchema,
-);
+export const book = mongoose.model("Book", bookSchema);
 export const bookAuthor = mongoose.model("BookAuthor", bookAuthorSchema);

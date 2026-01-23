@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { bookInformation } from "../models/book";
+import { book } from "../models/book";
 
 export const getBookById = async (request: Request, response: Response) => {
   try {
@@ -7,7 +7,7 @@ export const getBookById = async (request: Request, response: Response) => {
 
     if (!id) response.status(400).json({ message: "ID not provided" });
 
-    const document = await bookInformation.findById(id);
+    const document = await book.findById(id);
 
     if (!document) response.status(404).json({ message: "Book not found" });
 
