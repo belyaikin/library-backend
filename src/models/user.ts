@@ -7,7 +7,7 @@ export interface User extends Document {
   email: string;
   password: string;
 
-  ownedBooks: Types.ObjectId[]
+  ownedBooks: Types.ObjectId[];
 }
 
 const userSchema = new Schema<User>({
@@ -28,10 +28,12 @@ const userSchema = new Schema<User>({
     required: true,
   },
 
-  ownedBooks: [{
-    type: Schema.Types.ObjectId,
-    ref: "Book"
-  }]
+  ownedBooks: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Book",
+    },
+  ],
 });
 
 export const userModel = mongoose.model("User", userSchema);
