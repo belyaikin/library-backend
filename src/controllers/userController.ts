@@ -20,14 +20,15 @@ export const getUserById = async (request: Request, response: Response) => {
 };
 
 export const createUser = async (request: Request, response: Response) => {
-  const { firstName, lastName, password } = request.body;
+  const { firstName, lastName, email, password } = request.body;
 
-  if (!firstName || !lastName || !password)
+  if (!firstName || !lastName || !password || !email)
     response.status(400).json({ message: "Not all parameters are specified" });
 
   const user = new userModel({
     firstName,
     lastName,
+    email,
     password,
   });
 
