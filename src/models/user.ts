@@ -1,4 +1,4 @@
-import { Schema, Document } from "mongoose";
+import { Schema, Document, Mongoose, Model, Types } from "mongoose";
 import mongoose from "mongoose";
 
 export interface User extends Document {
@@ -6,6 +6,8 @@ export interface User extends Document {
   lastName: string;
   email: string;
   password: string;
+
+  ownedBooks: Types.ObjectId[]
 }
 
 const userSchema = new Schema<User>({
@@ -25,6 +27,11 @@ const userSchema = new Schema<User>({
     type: String,
     required: true,
   },
+
+  ownedBooks: [{
+    type: Schema.Types.ObjectId,
+    ref: "Book"
+  }]
 });
 
 export const userModel = mongoose.model("User", userSchema);

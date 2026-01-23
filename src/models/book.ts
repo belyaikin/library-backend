@@ -1,8 +1,8 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema, Document, Types } from "mongoose";
 
 export interface Book extends Document {
   title: string;
-  author: BookAuthor;
+  author: Types.ObjectId;
   yearPublished: number;
 }
 
