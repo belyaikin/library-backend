@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
-import { bookModel } from "../models/book.js";
-
-// TODO: Move book creation/retrieval logic from here to it's according service
+import { findBookById } from "../services/bookService.js";
 
 export const getBookById = async (request: Request, response: Response) => {
   try {
@@ -9,7 +7,7 @@ export const getBookById = async (request: Request, response: Response) => {
 
     if (!id) return response.status(400).json({ message: "ID not provided" });
 
-    const document = await bookModel.findById(id);
+    const document = findBookById(id);
 
     if (!document)
       return response.status(404).json({ message: "Book not found" });
@@ -22,3 +20,9 @@ export const getBookById = async (request: Request, response: Response) => {
     });
   }
 };
+
+// To create a book, we need to create an author (BookAuthor) first
+export const createAuthor = async (request: Request, response: Response) => {};
+
+// This will take a book author ID
+export const createBook = async (request: Request, response: Response) => {};
