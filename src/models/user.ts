@@ -1,33 +1,46 @@
-import { Schema, Document, Mongoose, Model, Types } from "mongoose";
+import { HydratedDocument, Schema, Types } from "mongoose";
 import mongoose from "mongoose";
 
-export interface User extends Document {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-
+export interface User {
+  information: UserInformation;
+  credentials: UserCredentials;
   ownedBooks: Types.ObjectId[];
 }
 
-const userSchema = new Schema<User>({
-  firstName: {
-    type: String,
-    required: true,
-  },
-  lastName: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
+export interface UserInformation {
+  firstName: string;
+  lastName: string;
+}
 
+export interface UserCredentials {
+  email: string;
+  password: string;
+}
+
+export type UserDocument = HydratedDocument<User>;
+
+const userSchema = new Schema<User>({
+  information: {
+    firstName: {
+      type: String,
+      required: true,
+    },
+    lastName: {
+      type: String,
+      required: true,
+    },
+  },
+  credentials: {
+    email: {
+      type: String,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+      select: false,
+    },
+  },
   ownedBooks: [
     {
       type: Schema.Types.ObjectId,

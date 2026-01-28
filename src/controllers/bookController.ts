@@ -1,20 +1,24 @@
 import { Request, Response } from "express";
-import { book } from "../models/book";
+import { bookModel } from "../models/book";
+
+// TODO: Move book creation/retrieval logic from here to it's according service
 
 export const getBookById = async (request: Request, response: Response) => {
   try {
     const { id } = request.params;
 
-    if (!id) response.status(400).json({ message: "ID not provided" });
+    if (!id) return response.status(400).json({ message: "ID not provided" });
 
-    const document = await book.findById(id);
+    const document = await bookModel.findById(id);
 
-    if (!document) response.status(404).json({ message: "Book not found" });
+    if (!document)
+      return response.status(404).json({ message: "Book not found" });
 
     response.status(200).json(document);
   } catch (error) {
-    response
-      .status(500)
-      .json({ message: "Server error", error: error.message });
+    return response.status(500).json({
+      message: "Server error",
+      error: error instanceof Error ? error.message : error,
+    });
   }
 };
