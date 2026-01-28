@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { bookModel } from "../models/book";
+import { bookModel } from "../models/book.js";
 
 // TODO: Move book creation/retrieval logic from here to it's according service
 

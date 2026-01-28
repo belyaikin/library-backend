@@ -18,7 +18,7 @@ export const getUserById = async (request: Request, response: Response) => {
   } catch (error) {
     return response
       .status(500)
-      .json({ message: "Server error", error: error.message });
+      .json({ message: "Server error", error: error instanceof Error ? error.message : error });
   }
 };
 
