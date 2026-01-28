@@ -1,13 +1,23 @@
-import mongoose, { Model, Schema, Document } from "mongoose";
+import mongoose, { HydratedDocument, Schema, Types } from "mongoose";
 
-export interface Book extends Document {
+export interface Book {
   title: string;
-  author: {
-    firstName: string;
-    lastName: string;
-  };
-  content: string;
+  author: Types.ObjectId;
+  yearPublished: number;
 }
+
+export interface BookAuthor {
+  firstName: string;
+  lastName: string;
+}
+
+export interface YearsActive {
+  from: Date;
+  to: Date;
+}
+
+export type BookDocument = HydratedDocument<Book>;
+export type BookAuthorDocument = HydratedDocument<BookAuthor>;
 
 const bookSchema = new Schema<Book>({
   title: {
@@ -15,19 +25,24 @@ const bookSchema = new Schema<Book>({
     required: true,
   },
   author: {
-    firstName: {
-      type: String,
-      required: true,
-    },
-    lastName: {
-      type: String,
-      required: true,
-    },
+    type: Schema.Types.ObjectId,
+    ref: "BookAuthor",
   },
-  content: {
+  yearPublished: {
+    type: Number,
+  },
+});
+
+const bookAuthorSchema = new Schema<BookAuthor>({
+  firstName: {
+    type: String,
+    required: true,
+  },
+  lastName: {
     type: String,
     required: true,
   },
 });
 
-export const book = mongoose.model("Book", bookSchema);
+export const bookModel = mongoose.model("Book", bookSchema);
+export const bookAuthorModel = mongoose.model("BookAuthor", bookAuthorSchema);
