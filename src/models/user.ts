@@ -33,6 +33,7 @@ const userSchema = new Schema<User>({
   credentials: {
     email: {
       type: String,
+      unique: true,
       required: true,
     },
     password: {
