@@ -7,7 +7,7 @@ export const getAuthorById = async (request: Request, response: Response) => {
 
     if (!id) return response.status(400).json({ message: "ID not provided" });
 
-    const document = findAuthorById(id);
+    const document = await findAuthorById(id);
 
     if (!document)
       return response.status(404).json({ message: "Book not found" });
@@ -31,7 +31,7 @@ export const registerAuthor = async (request: Request, response: Response) => {
         .json({ message: "Not all parameters are specified" });
     }
 
-    const savedAuthor = createAuthor(firstName, lastName);
+    const savedAuthor = await createAuthor(firstName, lastName);
 
     return response.status(201).json(savedAuthor);
   } catch (error) {

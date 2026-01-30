@@ -7,7 +7,7 @@ export const getBookById = async (request: Request, response: Response) => {
 
     if (!id) return response.status(400).json({ message: "ID not provided" });
 
-    const document = findBookById(id);
+    const document = await findBookById(id);
 
     if (!document)
       return response.status(404).json({ message: "Book not found" });
@@ -25,7 +25,7 @@ export const registerBook = async (request: Request, response: Response) => {
   try {
     const { title, authorId, yearPublished } = request.body;
 
-    const createdBook = createBook(title, authorId, yearPublished);
+    const createdBook = await createBook(title, authorId, yearPublished);
 
     return response.status(201).json(createdBook);
   } catch (error) {

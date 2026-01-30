@@ -7,7 +7,7 @@ export const getUserById = async (request: Request, response: Response) => {
 
     if (!id) return response.status(400).json({ message: "ID not provided" });
 
-    const document = findUserById(id);
+    const document = await findUserById(id);
 
     if (!document)
       return response.status(404).json({ message: "User not found" });
@@ -31,7 +31,7 @@ export const registerUser = async (request: Request, response: Response) => {
         .json({ message: "Not all parameters are specified" });
     }
 
-    const savedUser = createUser(firstName, lastName, email, password);
+    const savedUser = await createUser(firstName, lastName, email, password);
 
     return response.status(201).json(savedUser);
   } catch (error) {
