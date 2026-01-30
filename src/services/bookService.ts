@@ -8,7 +8,11 @@ export const findBookById = async (id: string | string[]) => {
 };
 
 // TODO
-export const createBook = async (title: string, authorId: string, yearPublished: string) => {
+export const createBook = async (
+  title: string,
+  authorId: string,
+  yearPublished: string,
+) => {
   if (!findAuthorById(authorId)) {
     throw new Error("Author with this ID wasn't found. Maybe create one?");
   }
@@ -16,8 +20,8 @@ export const createBook = async (title: string, authorId: string, yearPublished:
   const document = new bookModel({
     title,
     author: authorId,
-    yearPublished
-  })
+    yearPublished,
+  });
 
-  return await document.save()
+  return await document.save();
 };
