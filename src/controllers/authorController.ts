@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
-import { createBook, findBookById } from "../services/bookService.js";
+import { createAuthor, findAuthorById } from "../services/authorService.js";
 
-export const getBookById = async (request: Request, response: Response) => {
+export const getAuthorById = async (request: Request, response: Response) => {
   try {
     const { id } = request.params;
 
     if (!id) return response.status(400).json({ message: "ID not provided" });
 
-    const document = findBookById(id);
+    const document = findAuthorById(id);
 
     if (!document)
       return response.status(404).json({ message: "Book not found" });
@@ -21,13 +21,19 @@ export const getBookById = async (request: Request, response: Response) => {
   }
 };
 
-export const registerBook = async (request: Request, response: Response) => {
+export const registerAuthor = async (request: Request, response: Response) => {
   try {
-    const { title, authorId, yearPublished } = request.body;
+    const { firstName, lastName } = request.body;
 
-    const createdBook = createBook(title, authorId, yearPublished);
+    if (!firstName || !lastName) {
+      return response
+        .status(400)
+        .json({ message: "Not all parameters are specified" });
+    }
 
-    return response.status(201).json(createdBook);
+    const savedAuthor = createAuthor(firstName, lastName);
+
+    return response.status(201).json(savedAuthor);
   } catch (error) {
     return response.status(500).json({
       message: "Server error",

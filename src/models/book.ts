@@ -6,18 +6,7 @@ export interface Book {
   yearPublished: number;
 }
 
-export interface BookAuthor {
-  firstName: string;
-  lastName: string;
-}
-
-export interface YearsActive {
-  from: Date;
-  to: Date;
-}
-
 export type BookDocument = HydratedDocument<Book>;
-export type BookAuthorDocument = HydratedDocument<BookAuthor>;
 
 const bookSchema = new Schema<Book>({
   title: {
@@ -26,23 +15,11 @@ const bookSchema = new Schema<Book>({
   },
   author: {
     type: Schema.Types.ObjectId,
-    ref: "BookAuthor",
+    ref: "Author",
   },
   yearPublished: {
     type: Number,
   },
 });
 
-const bookAuthorSchema = new Schema<BookAuthor>({
-  firstName: {
-    type: String,
-    required: true,
-  },
-  lastName: {
-    type: String,
-    required: true,
-  },
-});
-
 export const bookModel = mongoose.model("Book", bookSchema);
-export const bookAuthorModel = mongoose.model("BookAuthor", bookAuthorSchema);
