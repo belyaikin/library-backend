@@ -12,7 +12,7 @@ export const getBookById = async (request: Request, response: Response) => {
     if (!document)
       return response.status(404).json({ message: "Book not found" });
 
-    response.status(200).json(document);
+    return response.status(200).json(document);
   } catch (error) {
     return response.status(500).json({
       message: "Server error",
