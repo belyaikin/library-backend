@@ -25,7 +25,19 @@ export const registerBook = async (request: Request, response: Response) => {
   try {
     const { title, authorId, yearPublished } = request.body;
 
-    const createdBook = await createBook(title, authorId, yearPublished);
+    if (!title || !authorId || !yearPublished) {
+      return response
+        .status(400)
+        .json({ message: "Not all parameters are specified" });
+    }
+
+    if (!request.file) {
+      return response
+        .status(400)
+        .json({ message: "No EPUB file specified" });
+    }
+
+    const createdBook = await createBook(title, authorId, yearPublished, request.file.filename);
 
     return response.status(201).json(createdBook);
   } catch (error) {
