@@ -1,19 +1,18 @@
+import config from "../config/config.js";
 import { bookModel } from "../models/book.js";
 import { findAuthorById } from "./authorService.js";
-
-// TODO: it's not finished
 
 export const findBookById = async (id: string | string[]) => {
   return await bookModel.findById(id);
 };
 
-// TODO
 export const createBook = async (
   title: string,
   authorId: string,
   yearPublished: string,
+  fileName: string
 ) => {
-  if (!findAuthorById(authorId)) {
+  if (findAuthorById(authorId) == null) {
     throw new Error("Author with this ID wasn't found. Maybe create one?");
   }
 
@@ -21,6 +20,7 @@ export const createBook = async (
     title,
     author: authorId,
     yearPublished,
+    epubUrl: `${config.epubLocation}/${fileName}`
   });
 
   return await document.save();

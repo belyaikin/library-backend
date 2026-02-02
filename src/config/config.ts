@@ -6,6 +6,7 @@ interface Config {
   port: number;
   environment: "dev" | "prod";
   mongodbUri: string;
+  epubLocation: string;
 }
 
 const mongodbUri = process.env.MONGODB_URI;
@@ -18,6 +19,7 @@ const config: Config = {
   port: Number(process.env.PORT) || 3000,
   environment: process.env.ENVIRONMENT === "prod" ? "prod" : "dev",
   mongodbUri,
+  epubLocation: process.env.EPUB_LOCATION || "epubs/",
 };
 
 export default config;
