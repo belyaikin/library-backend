@@ -12,15 +12,15 @@ export const createBook = async (
   yearPublished: string,
   fileName: string
 ) => {
-  if (findAuthorById(authorId) == null) {
-    throw new Error("Author with this ID wasn't found. Maybe create one?");
+  if (!findAuthorById(authorId)) {
+    throw new Error("Author with specified ID wasn't found");
   }
 
   const document = new bookModel({
     title,
     author: authorId,
     yearPublished,
-    epubUrl: `${config.epubLocation}/${fileName}`
+    epub: fileName
   });
 
   return await document.save();
