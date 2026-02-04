@@ -2,10 +2,12 @@ import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 
 import config from "../config/config.js";
+import { Role } from "../models/user.js";
+import { findUserById } from "../services/userService.js";
 
 export interface AccessTokenPayload extends jwt.JwtPayload {
   userId: string;
-  role: "USER" | "ADMIN";
+  role: Role;
 }
 
 declare global {
@@ -16,7 +18,7 @@ declare global {
   }
 }
 
-const authenticateAccessToken = (
+const authenticateAccessToken = async (
   request: Request,
   response: Response,
   next: NextFunction,
@@ -42,6 +44,10 @@ const authenticateAccessToken = (
       token,
       config.access_token_secret,
     ) as AccessTokenPayload;
+
+    if ((await findUserById(payload.userId))?.role != payload.role) {
+      throw Error("JWT payload role didn't match with DB stored role")
+    }
 
     request.accessTokenPayload = payload;
     next();

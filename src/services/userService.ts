@@ -21,7 +21,7 @@ export const createUser = async (
   password: string,
   role?: Role,
 ) => {
-  let hashedPassword = await hash(password, 12);
+  const hashedPassword = await hash(password, 12);
 
   const document = new userModel({
     information: {

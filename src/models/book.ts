@@ -1,4 +1,4 @@
-import mongoose, { HydratedDocument, Schema, Types } from "mongoose";
+import mongoose, { Schema, Types } from "mongoose";
 
 export interface Book {
   title: string;

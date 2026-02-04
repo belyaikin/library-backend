@@ -1,9 +1,6 @@
 import { Request, Response } from "express";
 import { findUserById } from "../services/userService.js";
 import { findBookById } from "../services/bookService.js";
-import path from "path";
-import fs from "fs";
-import config from "../config/config.js";
 import { createEpubReadStream } from "../services/epubService.js";
 
 export const getEpub = async (request: Request, response: Response) => {
