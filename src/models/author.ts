@@ -5,8 +5,6 @@ export interface Author {
   lastName: string;
 }
 
-export type authorDocument = HydratedDocument<Author>;
-
 const authorSchema = new Schema<Author>({
   firstName: {
     type: String,

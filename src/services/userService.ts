@@ -1,11 +1,14 @@
-import { userModel } from "../models/user.js";
+import { hash } from "bcrypt";
+import { Role, userModel } from "../models/user.js";
 
 export const findUserById = async (id: string | string[]) => {
   return await userModel.findById(id);
 };
 
 export const findUserByEmail = async (email: string) => {
-  return await userModel.find({ "credentials.email": email });
+  return await userModel.findOne({
+    "credentials.email": email,
+  }).select("+credentials.password");
 };
 
 export const createUser = async (
@@ -13,7 +16,10 @@ export const createUser = async (
   lastName: string,
   email: string,
   password: string,
+  role?: Role
 ) => {
+  let hashedPassword = await hash(password, 12)
+
   const document = new userModel({
     information: {
       firstName,
@@ -21,8 +27,9 @@ export const createUser = async (
     },
     credentials: {
       email,
-      password,
+      password: hashedPassword,
     },
+    role
   });
 
   return await document.save();

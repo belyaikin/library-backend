@@ -7,8 +7,6 @@ export interface Book {
   epub: string;
 }
 
-export type BookDocument = HydratedDocument<Book>;
-
 const bookSchema = new Schema<Book>({
   title: {
     type: String,

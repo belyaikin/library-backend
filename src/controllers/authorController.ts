@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import { createAuthor, findAuthorById } from "../services/authorService.js";
+import { Role } from "../models/user.js";
+import { findUserById } from "../services/userService.js";
 
 export const getAuthorById = async (request: Request, response: Response) => {
   try {
@@ -24,6 +26,22 @@ export const getAuthorById = async (request: Request, response: Response) => {
 export const registerAuthor = async (request: Request, response: Response) => {
   try {
     const { firstName, lastName } = request.body;
+
+    const accessTokenPayload = request.accessTokenPayload;
+
+    if (!accessTokenPayload) {
+      return response.status(401).json({ message: "Unauthorized" });
+    }
+
+    const user = await findUserById(accessTokenPayload.userId);
+
+    if (!user) {
+      return response.status(401).json({ message: "User not found" });
+    }
+
+    if (user.role !== Role.Admin) {
+      return response.status(401).json({ message: "Unauthorized" });
+    }
 
     if (!firstName || !lastName) {
       return response

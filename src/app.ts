@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import userRoutes from "./routes/userRoutes.js";
 import bookRoutes from "./routes/bookRoutes.js";
 import authorRoutes from "./routes/authorRoutes.js";
+import authRoutes from "./routes/authRoutes.js"
 
 import cors from "cors";
 
@@ -18,7 +19,9 @@ app.use("/api/user", userRoutes);
 app.use("/api/book", bookRoutes);
 app.use("/api/author", authorRoutes);
 
-app.use("/epubs", express.static(config.epubLocation));
+app.use("/api/epub", express.static(config.epubLocation));
+
+app.use("/api/auth", authRoutes)
 
 mongoose.connect(config.mongodbUri);
 

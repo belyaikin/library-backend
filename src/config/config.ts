@@ -7,6 +7,9 @@ interface Config {
   environment: "dev" | "prod";
   mongodbUri: string;
   epubLocation: string;
+
+  access_token_secret: string;
+  refresh_token_secret: string;
 }
 
 const mongodbUri = process.env.MONGODB_URI;
@@ -18,8 +21,15 @@ if (!mongodbUri) {
 const config: Config = {
   port: Number(process.env.PORT) || 3000,
   environment: process.env.ENVIRONMENT === "prod" ? "prod" : "dev",
+
   mongodbUri,
+
   epubLocation: process.env.EPUB_LOCATION || "epubs/",
+
+  access_token_secret:
+    process.env.ACCESS_TOKEN_SECRET || "PLEASECHANGEINPRODUCTION",
+  refresh_token_secret:
+    process.env.REFRESH_TOKEN_SECRET || "PLEASECHANGEINPRODUCTION",
 };
 
 export default config;

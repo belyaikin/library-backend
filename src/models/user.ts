@@ -1,9 +1,16 @@
 import { HydratedDocument, Schema, Types } from "mongoose";
 import mongoose from "mongoose";
 
+export enum Role {
+  User = "USER",
+  Admin = "ADMIN",
+}
+
 export interface User {
   information: UserInformation;
   credentials: UserCredentials;
+
+  role: Role;
   ownedBooks: Types.ObjectId[];
 }
 
@@ -16,8 +23,6 @@ export interface UserCredentials {
   email: string;
   password: string;
 }
-
-export type UserDocument = HydratedDocument<User>;
 
 const userSchema = new Schema<User>({
   information: {
@@ -48,6 +53,13 @@ const userSchema = new Schema<User>({
       ref: "Book",
     },
   ],
+
+  role: {
+    type: String,
+    enum: Object.values(Role),
+    default: Role.User,
+    required: true,
+  },
 });
 
 export const userModel = mongoose.model("User", userSchema);

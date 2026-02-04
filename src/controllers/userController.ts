@@ -23,7 +23,7 @@ export const getUserById = async (request: Request, response: Response) => {
 
 export const registerUser = async (request: Request, response: Response) => {
   try {
-    const { firstName, lastName, email, password } = request.body;
+    const { firstName, lastName, email, password, role } = request.body;
 
     if (!firstName || !lastName || !email || !password) {
       return response
@@ -31,7 +31,7 @@ export const registerUser = async (request: Request, response: Response) => {
         .json({ message: "Not all parameters are specified" });
     }
 
-    const savedUser = await createUser(firstName, lastName, email, password);
+    const savedUser = await createUser(firstName, lastName, email, password, role);
 
     return response.status(201).json(savedUser);
   } catch (error) {
