@@ -7,6 +7,10 @@ import fs from "fs";
 export const createEpubReadStream = (book: Book, response: Response) => {
   const epubPath = path.join(config.epubLocation, book.epub);
 
+  if (!fs.existsSync(epubPath)) {
+    return response.status(404).json({ message: "EPUB file missing" });
+  }
+
   response.setHeader("Content-Type", "application/epub+zip");
   response.setHeader(
     "Content-Disposition",
