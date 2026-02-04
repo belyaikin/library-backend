@@ -6,9 +6,11 @@ export const findUserById = async (id: string | string[]) => {
 };
 
 export const findUserByEmail = async (email: string) => {
-  return await userModel.findOne({
-    "credentials.email": email,
-  }).select("+credentials.password");
+  return await userModel
+    .findOne({
+      "credentials.email": email,
+    })
+    .select("+credentials.password");
 };
 
 export const createUser = async (
@@ -16,9 +18,9 @@ export const createUser = async (
   lastName: string,
   email: string,
   password: string,
-  role?: Role
+  role?: Role,
 ) => {
-  let hashedPassword = await hash(password, 12)
+  let hashedPassword = await hash(password, 12);
 
   const document = new userModel({
     information: {
@@ -29,7 +31,7 @@ export const createUser = async (
       email,
       password: hashedPassword,
     },
-    role
+    role,
   });
 
   return await document.save();

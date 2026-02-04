@@ -19,24 +19,28 @@ declare global {
 const authenticateAccessToken = (
   request: Request,
   response: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   const authHeader = request.headers.authorization;
 
   if (!authHeader) {
-    return response.status(401).json({ message: "No authorization header provided" });
+    return response
+      .status(401)
+      .json({ message: "No authorization header provided" });
   }
 
   const token = authHeader.split(" ")[1];
 
   if (!token) {
-    return response.status(401).json({ message: "No authorization token found" });
+    return response
+      .status(401)
+      .json({ message: "No authorization token found" });
   }
 
   try {
     const payload = jwt.verify(
       token,
-      config.access_token_secret
+      config.access_token_secret,
     ) as AccessTokenPayload;
 
     request.accessTokenPayload = payload;

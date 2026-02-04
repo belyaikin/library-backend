@@ -31,7 +31,13 @@ export const registerUser = async (request: Request, response: Response) => {
         .json({ message: "Not all parameters are specified" });
     }
 
-    const savedUser = await createUser(firstName, lastName, email, password, role);
+    const savedUser = await createUser(
+      firstName,
+      lastName,
+      email,
+      password,
+      role,
+    );
 
     return response.status(201).json(savedUser);
   } catch (error) {

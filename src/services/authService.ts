@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken";
 
 import { findUserByEmail } from "./userService.js";
 import config from "../config/config.js";
@@ -11,7 +11,7 @@ export const getAccessToken = async (email: string, password: string) => {
     throw new Error("Invalid email or password");
   }
 
-  if (!await compare(password, user.credentials.password)) {
+  if (!(await compare(password, user.credentials.password))) {
     throw new Error("Wrong password");
   }
 
