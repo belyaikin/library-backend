@@ -19,7 +19,7 @@ app.use("/api/user", userRoutes);
 app.use("/api/book", bookRoutes);
 app.use("/api/author", authorRoutes);
 
-app.use("/api/epub", express.static(config.epubLocation));
+// app.use("/api/epub", express.static(config.epubLocation));
 
 app.use("/api/auth", authRoutes);
 

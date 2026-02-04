@@ -1,14 +1,33 @@
 import { Request, Response } from "express";
 import { createBook, findBookById } from "../services/bookService.js";
-import { findUserById } from "../services/userService.js";
+import { addToOwnedBooks, findUserById } from "../services/userService.js";
 import { Role } from "../models/user.js";
 
 export const getBookById = async (request: Request, response: Response) => {
   try {
     const { id } = request.params;
+
+    const document = await findBookById(id);
+
+    if (!document)
+      return response.status(404).json({ message: "Book not found" });
+
+    return response.status(200).json(document);
+  } catch (error) {
+    return response.status(500).json({
+      message: "Server error",
+      error: error instanceof Error ? error.message : error,
+    });
+  }
+};
+
+export const buyBook = async (request: Request, response: Response) => {
+  try {
+    const { id } = request.query;
     const accessTokenPayload = request.accessTokenPayload;
 
-    if (!id) return response.status(400).json({ message: "ID not provided" });
+    if (!id)
+      return response.status(400).json({ message: "Book ID is not provided" });
 
     if (!accessTokenPayload) {
       return response.status(401).json({ message: "Unauthorized" });
@@ -20,20 +39,14 @@ export const getBookById = async (request: Request, response: Response) => {
       return response.status(401).json({ message: "User not found" });
     }
 
-    const ownsBook = user.ownedBooks.some((bookId) => bookId.toString() === id);
+    const updatedUser = await addToOwnedBooks(id.toString(), user.id);
 
-    if (!ownsBook) {
-      return response
-        .status(403)
-        .json({ message: "User doesn't own this book" });
-    }
-
-    const document = await findBookById(id);
-
-    if (!document)
-      return response.status(404).json({ message: "Book not found" });
-
-    return response.status(200).json(document);
+    return response
+      .status(200)
+      .json({
+        message: "Successfully bought a book",
+        updatedUser: updatedUser,
+      });
   } catch (error) {
     return response.status(500).json({
       message: "Server error",

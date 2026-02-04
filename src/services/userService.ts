@@ -1,5 +1,6 @@
 import { hash } from "bcrypt";
 import { Role, userModel } from "../models/user.js";
+import { Types } from "mongoose";
 
 export const findUserById = async (id: string | string[]) => {
   return await userModel.findById(id);
@@ -35,4 +36,12 @@ export const createUser = async (
   });
 
   return await document.save();
+};
+
+export const addToOwnedBooks = async (bookId: string, userId: string) => {
+  return await userModel.findByIdAndUpdate(
+    userId,
+    { $addToSet: { ownedBooks: new Types.ObjectId(bookId) } },
+    { new: true },
+  );
 };
