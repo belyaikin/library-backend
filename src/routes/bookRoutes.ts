@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   buyBook,
+  getAllBooks,
   getBookById,
   registerBook,
 } from "../controllers/bookController.js";
@@ -10,7 +11,8 @@ import { getEpub } from "../controllers/epubController.js";
 
 const router = Router();
 
-router.get("/:id", authenticateAccessToken, getBookById);
+router.get("/", getAllBooks)
+router.get("/:id", getBookById);
 router.post("/", authenticateAccessToken, upload.single("epub"), registerBook);
 router.put("/buy", authenticateAccessToken, buyBook);
 router.get("/epub/:id", authenticateAccessToken, getEpub);

@@ -1,7 +1,18 @@
 import { Request, Response } from "express";
-import { createBook, findBookById } from "../services/bookService.js";
+import { createBook, findAllBooks, findBookById } from "../services/bookService.js";
 import { addToOwnedBooks, findUserById } from "../services/userService.js";
 import { Role } from "../models/user.js";
+
+export const getAllBooks = async (request: Request, response: Response) => {
+  try {
+    return response.status(200).json(await findAllBooks());
+  } catch (error) {
+    return response.status(500).json({
+      message: "Server error",
+      error: error instanceof Error ? error.message : error,
+    });
+  }
+}
 
 export const getBookById = async (request: Request, response: Response) => {
   try {

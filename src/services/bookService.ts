@@ -1,6 +1,10 @@
 import { bookModel } from "../models/book.js";
 import { findAuthorById } from "./authorService.js";
 
+export const findAllBooks = async () => {
+  return await bookModel.find({});
+};
+
 export const findBookById = async (id: string | string[]) => {
   return await bookModel.findById(id);
 };
