@@ -19,3 +19,17 @@ export const createEpubReadStream = (book: Book, response: Response) => {
 
   fs.createReadStream(epubPath).pipe(response);
 };
+
+export const deleteEpubFile = (fileName: string) => {
+  const epubPath = path.join(config.epubLocation, fileName);
+
+  if (!fs.existsSync(epubPath)) {
+    return;
+  }
+
+  fs.rm(epubPath, (err) => {
+    if (err) {
+      throw err;
+    }
+  })
+}
