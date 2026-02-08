@@ -21,13 +21,13 @@ export const createBook = async (
   yearPublished: string,
   fileName: string,
 ) => {
-  if (!authorExists(authorId)) {
+  if (!(await authorExists(authorId))) {
     throw new Error("Author with specified ID wasn't found");
   }
 
   const document = new bookModel({
     title,
-    author: authorId,
+    authorId,
     yearPublished,
     epub: fileName,
   });

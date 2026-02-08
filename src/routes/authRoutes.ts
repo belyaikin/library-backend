@@ -4,5 +4,6 @@ import { login } from "../controllers/authController.js";
 const router = Router();
 
 router.get("/login", login);
+router.post("/login", login);
 
 export default router;

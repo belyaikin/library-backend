@@ -105,9 +105,13 @@ export const registerBook = async (request: Request, response: Response) => {
 
     return response.status(201).json(createdBook);
   } catch (error) {
+    const msg = error instanceof Error ? error.message : String(error);
+    if (msg.includes("wasn't found") || msg.includes("Cast to ObjectId failed")) {
+      return response.status(400).json({ message: msg });
+    }
     return response.status(500).json({
       message: "Server error",
-      error: error instanceof Error ? error.message : error,
+      error: msg,
     });
   }
 };
@@ -136,9 +140,9 @@ export const deleteBook = async (request: Request, response: Response) => {
       return response.status(400).json({message: "ID is not specified"})
     }
 
-    const deletedBook = deleteBookById(id);
+    const deletedBook = await deleteBookById(id);
 
-    return response.status(201).json(deletedBook);
+    return response.status(200).json(deletedBook);
   } catch (error) {
     return response.status(500).json({
       message: "Server error",

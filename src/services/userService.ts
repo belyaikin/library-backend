@@ -2,8 +2,19 @@ import { hash } from "bcrypt";
 import { Role, userModel } from "../models/user.js";
 import { Types } from "mongoose";
 
+export const findAllUsers = async () => {
+  return await userModel.find({});
+};
+
 export const findUserById = async (id: string | string[]) => {
   return await userModel.findById(id);
+};
+
+export const updateUserRole = async (userId: string, newRole: Role) => {
+  const user = await userModel.findById(userId);
+  if (!user) throw new Error("User not found");
+  user.role = newRole;
+  return await user.save();
 };
 
 export const findUserByEmail = async (email: string) => {
@@ -74,4 +85,30 @@ export const addToOwnedBooks = async (bookId: string, userId: string) => {
     { $addToSet: { ownedBooks: new Types.ObjectId(bookId) } },
     { new: true },
   );
+};
+
+export const getUserFavorites = async (userId: string) => {
+  const user = await userModel.findById(userId);
+  if (!user) throw new Error("User not found");
+  return user.favorites.map((id) => id.toString());
+};
+
+export const addToFavorites = async (bookId: string, userId: string) => {
+  const user = await userModel.findByIdAndUpdate(
+    userId,
+    { $addToSet: { favorites: new Types.ObjectId(bookId) } },
+    { new: true },
+  );
+  if (!user) throw new Error("User not found");
+  return user.favorites.map((id) => id.toString());
+};
+
+export const removeFromFavorites = async (bookId: string, userId: string) => {
+  const user = await userModel.findByIdAndUpdate(
+    userId,
+    { $pull: { favorites: new Types.ObjectId(bookId) } },
+    { new: true },
+  );
+  if (!user) throw new Error("User not found");
+  return user.favorites.map((id) => id.toString());
 };

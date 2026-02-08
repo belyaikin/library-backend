@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 
 export enum Role {
   User = "USER",
+  VipUser = "VIP_USER",
   Admin = "ADMIN",
 }
 
@@ -12,6 +13,7 @@ export interface User {
 
   role: Role;
   ownedBooks: Types.ObjectId[];
+  favorites: Types.ObjectId[];
 }
 
 export interface UserInformation {
@@ -48,6 +50,12 @@ const userSchema = new Schema<User>({
     },
   },
   ownedBooks: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Book",
+    },
+  ],
+  favorites: [
     {
       type: Schema.Types.ObjectId,
       ref: "Book",

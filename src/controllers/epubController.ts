@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { findUserById } from "../services/userService.js";
 import { findBookById } from "../services/bookService.js";
 import { createEpubReadStream } from "../services/epubService.js";
+import { Role } from "../models/user.js";
 
 export const getEpub = async (request: Request, response: Response) => {
   const { id } = request.params;
