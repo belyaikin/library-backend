@@ -12,8 +12,8 @@ export const findBookById = async (id: string | string[]) => {
 };
 
 export const bookExists = async (id: string | string[]) => {
-  return await bookModel.exists({_id: id})
-}
+  return await bookModel.exists({ _id: id });
+};
 
 export const createBook = async (
   title: string,
@@ -45,7 +45,7 @@ export const deleteBookById = async (id: string | string[]) => {
   deleteEpubFile(document.epub);
 
   return document;
-}
+};
 
 export const updateBookById = async (
   id: string | string[],
@@ -63,8 +63,8 @@ export const updateBookById = async (
   if (authorId) {
     const exists = await authorExists(authorId);
     if (!exists) throw new Error("Author with specified ID wasn't found");
-    
-    document.authorId = new mongoose.Types.ObjectId(authorId)
+
+    document.authorId = new mongoose.Types.ObjectId(authorId);
   }
 
   if (title !== undefined) document.title = title;

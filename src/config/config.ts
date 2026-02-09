@@ -6,6 +6,7 @@ interface Config {
   port: number;
   environment: "dev" | "prod";
   mongodbUri: string;
+  frontendUrl: string;
   epubLocation: string;
 
   access_token_secret: string;
@@ -23,6 +24,7 @@ const config: Config = {
   environment: process.env.ENVIRONMENT === "prod" ? "prod" : "dev",
 
   mongodbUri,
+  frontendUrl: process.env.FRONTEND_URL || "*",
 
   epubLocation: process.env.EPUB_LOCATION || "epubs/",
 

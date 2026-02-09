@@ -31,5 +31,5 @@ export const deleteEpubFile = (fileName: string) => {
     if (err) {
       throw err;
     }
-  })
-}
+  });
+};

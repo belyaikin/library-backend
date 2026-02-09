@@ -5,8 +5,8 @@ export const findAuthorById = async (id: string | string[]) => {
 };
 
 export const authorExists = async (id: string | string[]) => {
-  return await authorModel.exists({_id: id});
-}
+  return await authorModel.exists({ _id: id });
+};
 
 export const createAuthor = async (firstName: string, lastName: string) => {
   const document = new authorModel({
@@ -18,5 +18,5 @@ export const createAuthor = async (firstName: string, lastName: string) => {
 };
 
 export const deleteAuthor = async (id: string | string[]) => {
-  return await authorModel.findByIdAndDelete(id)
-}
+  return await authorModel.findByIdAndDelete(id);
+};

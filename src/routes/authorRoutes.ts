@@ -11,7 +11,7 @@ const router = Router();
 
 router.get("/:id", getAuthorById);
 router.post("/", authenticateAccessToken, registerAuthor);
-router.put(":id", authenticateAccessToken, updateAuthor)
+router.put(":id", authenticateAccessToken, updateAuthor);
 router.delete("/:id", authenticateAccessToken, unregisterAuthor);
 
 export default router;

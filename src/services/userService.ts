@@ -40,7 +40,7 @@ export const createUser = async (
 
 export const updateUserById = async (
   id: string | string[],
-  
+
   firstName?: string,
   lastName?: string,
   email?: string,
@@ -50,7 +50,7 @@ export const updateUserById = async (
   const user = await userModel.findById(id);
 
   if (!user) {
-    throw new Error(`User with ID ${id} wasn't found.`)
+    throw new Error(`User with ID ${id} wasn't found.`);
   }
 
   if (firstName) user.information.firstName = firstName;
@@ -62,10 +62,10 @@ export const updateUserById = async (
   if (role) user.role = role;
 
   return await user.save();
-}
+};
 
 export const deleteUser = async (id: string | string[]) => {
-  return await userModel.findByIdAndDelete(id)
+  return await userModel.findByIdAndDelete(id);
 };
 
 export const addToOwnedBooks = async (bookId: string, userId: string) => {

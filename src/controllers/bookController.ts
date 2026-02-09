@@ -1,5 +1,11 @@
 import { Request, Response } from "express";
-import { createBook, deleteBookById, findAllBooks, findBookById, updateBookById } from "../services/bookService.js";
+import {
+  createBook,
+  deleteBookById,
+  findAllBooks,
+  findBookById,
+  updateBookById,
+} from "../services/bookService.js";
 import { addToOwnedBooks, findUserById } from "../services/userService.js";
 import { Role } from "../models/user.js";
 
@@ -34,7 +40,7 @@ export const getBookById = async (request: Request, response: Response) => {
 
 export const buyBook = async (request: Request, response: Response) => {
   try {
-    const { id } = request.query;
+    const { id } = request.params;
     const accessTokenPayload = request.accessTokenPayload;
 
     if (!id)
@@ -52,12 +58,10 @@ export const buyBook = async (request: Request, response: Response) => {
 
     const updatedUser = await addToOwnedBooks(id.toString(), user.id);
 
-    return response
-      .status(200)
-      .json({
-        message: "Successfully bought a book",
-        updatedUser: updatedUser,
-      });
+    return response.status(200).json({
+      message: "Successfully bought a book",
+      updatedUser: updatedUser,
+    });
   } catch (error) {
     return response.status(500).json({
       message: "Server error",
@@ -133,7 +137,7 @@ export const deleteBook = async (request: Request, response: Response) => {
     const { id } = request.params;
 
     if (!id) {
-      return response.status(400).json({message: "ID is not specified"})
+      return response.status(400).json({ message: "ID is not specified" });
     }
 
     const deletedBook = deleteBookById(id);
@@ -174,10 +178,13 @@ export const updateBook = async (request: Request, response: Response) => {
     const { title, authorId, yearPublished } = request.body;
 
     if (!title && !authorId && !yearPublished && !request.file) {
-      return response.status(400).json({ message: "No update parameters provided" });
+      return response
+        .status(400)
+        .json({ message: "No update parameters provided" });
     }
 
-    const updated = await updateBookById(id, 
+    const updated = await updateBookById(
+      id,
       title,
       authorId,
       yearPublished,

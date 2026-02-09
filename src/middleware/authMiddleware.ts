@@ -46,7 +46,7 @@ const authenticateAccessToken = async (
     ) as AccessTokenPayload;
 
     if ((await findUserById(payload.userId))?.role != payload.role) {
-      throw Error("JWT payload role didn't match with DB stored role")
+      throw Error("JWT payload role didn't match with DB stored role");
     }
 
     request.accessTokenPayload = payload;

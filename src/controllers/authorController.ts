@@ -1,5 +1,9 @@
 import { Request, Response } from "express";
-import { createAuthor, deleteAuthor, findAuthorById } from "../services/authorService.js";
+import {
+  createAuthor,
+  deleteAuthor,
+  findAuthorById,
+} from "../services/authorService.js";
 import { Role } from "../models/user.js";
 import { findUserById } from "../services/userService.js";
 
@@ -97,7 +101,10 @@ export const updateAuthor = async (request: Request, response: Response) => {
   }
 };
 
-export const unregisterAuthor = async (request: Request, response: Response) => {
+export const unregisterAuthor = async (
+  request: Request,
+  response: Response,
+) => {
   try {
     const accessTokenPayload = request.accessTokenPayload;
 
@@ -118,7 +125,7 @@ export const unregisterAuthor = async (request: Request, response: Response) => 
     const { id } = request.params;
 
     if (!id) {
-      return response.status(400).json({message: "ID is not specified"})
+      return response.status(400).json({ message: "ID is not specified" });
     }
 
     const deletedAuthor = deleteAuthor(id);
