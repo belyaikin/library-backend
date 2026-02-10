@@ -1,5 +1,9 @@
 import { authorModel } from "../models/author.js";
 
+export const findAllAuthors = async () => {
+  return await authorModel.find({});
+};
+
 export const findAuthorById = async (id: string | string[]) => {
   return await authorModel.findById(id);
 };

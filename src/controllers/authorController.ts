@@ -2,10 +2,22 @@ import { Request, Response } from "express";
 import {
   createAuthor,
   deleteAuthor,
+  findAllAuthors,
   findAuthorById,
 } from "../services/authorService.js";
 import { Role } from "../models/user.js";
 import { findUserById } from "../services/userService.js";
+
+export const getAuthors = async (request: Request, response: Response) => {
+  try {
+    return response.status(200).json(await findAllAuthors());
+  } catch (error) {
+    return response.status(500).json({
+      message: "Server error",
+      error: error instanceof Error ? error.message : error,
+    });
+  }
+};
 
 export const getAuthorById = async (request: Request, response: Response) => {
   try {
