@@ -32,5 +32,5 @@ export const getEpub = async (request: Request, response: Response) => {
     return response.status(404).json({ message: "Book not found" });
   }
 
-  return createEpubReadStream(book, response);
+  return await createEpubReadStream(book, response);
 };

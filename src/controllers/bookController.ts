@@ -104,7 +104,7 @@ export const registerBook = async (request: Request, response: Response) => {
       title,
       authorId,
       yearPublished,
-      request.file.filename,
+      (request.file as any).key,
     );
 
     return response.status(201).json(createdBook);
