@@ -20,7 +20,5 @@ export const getAccessToken = async (email: string, password: string) => {
     role: user.role,
   };
 
-  return jwt.sign(payload, config.access_token_secret, {
-    expiresIn: "15m",
-  });
+  return jwt.sign(payload, config.access_token_secret);
 };
