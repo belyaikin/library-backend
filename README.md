@@ -8,10 +8,14 @@ This project was made by [Dmitriy Belyaikin](https://github.com/belyaikin) and [
 PORT - Port to run the app in, default is 3000\
 ENVIRONMENT - Development environment (dev/prod), default is dev\
 MONGODB_URI - MongoDB connection uri\
-FRONTEND_URL - URL of frontend
+FRONTEND_URL - URL of frontend\
 
-EPUB_LOCATION - Path to directory where EPUBS will be stored\
-ACCESS_TOKEN_SECRET - Self explanatory
+BUCKET_STORAGE_URL - Bucket endpoint Url\
+BUCKET_STORAGE_ACCESS_KEY - Bucket access key\
+BUCKET_STORAGE_SECRET_KEY - Bucket secret key\
+BUCKET_NAME - Bucket name
 
-4. Run with npm run dev
-5. Build with npm run build and start with npm run start
+ACCESS_TOKEN_SECRET - Secret token for generating and verifying access tokens
+
+1. Run with npm run dev
+2. Build with npm run build and start with npm run start

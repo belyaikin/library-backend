@@ -8,7 +8,6 @@ interface Config {
   mongodbUri: string;
   frontendUrl: string;
 
-  epubLocation: string;
   bucket_storage_url: string;
   bucket_storage_access_key: string;
   bucket_storage_secret_key: string;
@@ -31,7 +30,6 @@ const config: Config = {
   mongodbUri,
   frontendUrl: process.env.FRONTEND_URL || "*",
 
-  epubLocation: process.env.EPUB_LOCATION || "epubs/",
   bucket_storage_url: process.env.BUCKET_STORAGE_URL || "",
   bucket_storage_access_key: process.env.BUCKET_STORAGE_ACCESS_KEY || "",
   bucket_storage_secret_key: process.env.BUCKET_STORAGE_SECRET_KEY || "",

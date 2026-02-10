@@ -3,7 +3,7 @@ import { Book } from "../models/book.js";
 import { Response } from "express";
 import config from "../config/config.js";
 import fs from "fs";
-import { GetObjectCommand, S3 } from "@aws-sdk/client-s3";
+import { DeleteObjectCommand, GetObjectCommand, S3 } from "@aws-sdk/client-s3";
 import s3client from "../config/s3client.js";
 import { Readable } from "stream";
 
@@ -33,16 +33,11 @@ export const createEpubReadStream = async (book: Book, response: Response) => {
   }
 };
 
-export const deleteEpubFile = (fileName: string) => {
-  const epubPath = path.join(config.epubLocation, fileName);
+export const deleteEpubFile = async (fileName: string) => {
+  const command = new DeleteObjectCommand({
+    Bucket: config.bucket_name,
+    Key: fileName,
+  })
 
-  if (!fs.existsSync(epubPath)) {
-    return;
-  }
-
-  fs.rm(epubPath, (err) => {
-    if (err) {
-      throw err;
-    }
-  });
+  return await s3client.send(command);
 };
