@@ -12,7 +12,6 @@ import cors from "cors";
 
 const app = express();
 
-app.use(express.json());
 app.use(
   cors({
     origin: config.frontendUrl,
@@ -20,6 +19,8 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"],
   }),
 );
+
+app.use(express.json());
 
 app.use("/api/user", userRoutes);
 app.use("/api/book", bookRoutes);
