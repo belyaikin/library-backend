@@ -12,3 +12,6 @@ FRONTEND_URL - URL of frontend
 
 EPUB_LOCATION - Path to directory where EPUBS will be stored\
 ACCESS_TOKEN_SECRET - Self explanatory
+
+4. Run with npm run dev
+5. Build with npm run build and start with npm run start
