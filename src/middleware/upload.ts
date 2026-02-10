@@ -1,17 +1,21 @@
 import config from "../config/config.js";
 import multer from "multer";
+import multerS3 from "multer-s3";
+import s3client from "../config/s3client.js";
 
-const storage = multer.diskStorage({
-  destination: config.epubLocation,
+const s3Storage = multerS3({
+  s3: s3client,
+  bucket: config.bucket_name,
 
-  filename: (_, file, cb) => {
+  metadata: (req, file, cb) => {
+    cb(null, { fieldName: file.fieldname });
+  },
+
+  key: (req, file, cb) => {
     cb(null, file.originalname);
   },
 });
 
 export default multer({
-  storage: storage,
-  fileFilter: (_, file, cb) => {
-    cb(null, file.mimetype === "application/epub+zip");
-  },
+  storage: s3Storage,
 });

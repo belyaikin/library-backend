@@ -7,7 +7,12 @@ interface Config {
   environment: "dev" | "prod";
   mongodbUri: string;
   frontendUrl: string;
+
   epubLocation: string;
+  bucket_storage_url: string;
+  bucket_storage_access_key: string;
+  bucket_storage_secret_key: string;
+  bucket_name: string;
 
   access_token_secret: string;
   refresh_token_secret: string;
@@ -27,6 +32,10 @@ const config: Config = {
   frontendUrl: process.env.FRONTEND_URL || "*",
 
   epubLocation: process.env.EPUB_LOCATION || "epubs/",
+  bucket_storage_url: process.env.BUCKET_STORAGE_URL || "",
+  bucket_storage_access_key: process.env.BUCKET_STORAGE_ACCESS_KEY || "",
+  bucket_storage_secret_key: process.env.BUCKET_STORAGE_SECRET_KEY || "",
+  bucket_name: process.env.BUCKET_NAME || "",
 
   access_token_secret:
     process.env.ACCESS_TOKEN_SECRET || "PLEASECHANGEINPRODUCTION",
