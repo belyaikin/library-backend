@@ -26,7 +26,7 @@ app.use(express.json());
 app.use("/api/user", userRoutes);
 app.use("/api/book", bookRoutes);
 app.use("/api/author", authorRoutes);
-app.use("/api/reviews", reviewRoutes);
+app.use("/api/review", reviewRoutes);
 
 // app.use("/api/epub", express.static(config.epubLocation));
 
