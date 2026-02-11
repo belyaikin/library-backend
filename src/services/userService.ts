@@ -74,15 +74,18 @@ export const addtoFavoriteBooks = async (bookId: string, userId: string) => {
     { $addToSet: { favoriteBooks: new Types.ObjectId(bookId) } },
     { new: true },
   );
-}
+};
 
-export const removeFromFavoriteBooks = async (bookId: string, userId: string) => {
+export const removeFromFavoriteBooks = async (
+  bookId: string,
+  userId: string,
+) => {
   return await userModel.findByIdAndUpdate(
     userId,
     { $pull: { favoriteBooks: new Types.ObjectId(bookId) } },
-    { new: true }
+    { new: true },
   );
-}
+};
 
 export const addToOwnedBooks = async (bookId: string, userId: string) => {
   return await userModel.findByIdAndUpdate(

@@ -6,7 +6,12 @@ import {
   findBookById,
   updateBookById,
 } from "../services/bookService.js";
-import { addToOwnedBooks, findUserById, removeFromFavoriteBooks } from "../services/userService.js";
+import {
+  addtoFavoriteBooks,
+  addToOwnedBooks,
+  findUserById,
+  removeFromFavoriteBooks,
+} from "../services/userService.js";
 import { Role } from "../models/user.js";
 
 export const getAllBooks = async (request: Request, response: Response) => {
@@ -88,7 +93,7 @@ export const addAsFavorite = async (request: Request, response: Response) => {
       return response.status(401).json({ message: "User not found" });
     }
 
-    const updatedUser = await addToOwnedBooks(id.toString(), user.id);
+    const updatedUser = await addtoFavoriteBooks(id.toString(), user.id);
 
     return response.status(200).json({
       message: "Successfully added as favorite",
@@ -102,7 +107,10 @@ export const addAsFavorite = async (request: Request, response: Response) => {
   }
 };
 
-export const removeFromFavorites = async (request: Request, response: Response) => {
+export const removeFromFavorites = async (
+  request: Request,
+  response: Response,
+) => {
   try {
     const { id } = request.params;
     const accessTokenPayload = request.accessTokenPayload;
