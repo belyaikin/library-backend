@@ -45,8 +45,7 @@ export const registerReview = async (request: Request, response: Response) => {
       return response.status(401).json({ message: "User not found" });
     }
 
-    const { bookId } = request.params;
-    const { stars, body } = request.body;
+    const { bookId, stars, body } = request.body;
 
     if (!bookId || !stars) {
       return response
