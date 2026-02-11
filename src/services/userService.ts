@@ -68,6 +68,22 @@ export const deleteUser = async (id: string | string[]) => {
   return await userModel.findByIdAndDelete(id);
 };
 
+export const addtoFavoriteBooks = async (bookId: string, userId: string) => {
+  return await userModel.findByIdAndUpdate(
+    userId,
+    { $addToSet: { favoriteBooks: new Types.ObjectId(bookId) } },
+    { new: true },
+  );
+}
+
+export const removeFromFavoriteBooks = async (bookId: string, userId: string) => {
+  return await userModel.findByIdAndUpdate(
+    userId,
+    { $pull: { favoriteBooks: new Types.ObjectId(bookId) } },
+    { new: true }
+  );
+}
+
 export const addToOwnedBooks = async (bookId: string, userId: string) => {
   return await userModel.findByIdAndUpdate(
     userId,

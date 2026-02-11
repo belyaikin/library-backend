@@ -1,10 +1,12 @@
 import { Router } from "express";
 import {
+  addAsFavorite,
   buyBook,
   deleteBook,
   getAllBooks,
   getBookById,
   registerBook,
+  removeFromFavorites,
   updateBook,
 } from "../controllers/bookController.js";
 import upload from "../middleware/upload.js";
@@ -17,6 +19,8 @@ router.get("/", getAllBooks);
 router.get("/:id", getBookById);
 router.post("/", authenticateAccessToken, upload.single("epub"), registerBook);
 router.put("/:id", authenticateAccessToken, upload.single("epub"), updateBook);
+router.put("/favorite/:id", authenticateAccessToken, addAsFavorite);
+router.delete("/favorite/:id", authenticateAccessToken, removeFromFavorites);
 router.put("/buy/:id", authenticateAccessToken, buyBook);
 router.get("/epub/:id", authenticateAccessToken, getEpub);
 router.delete("/:id", authenticateAccessToken, deleteBook);

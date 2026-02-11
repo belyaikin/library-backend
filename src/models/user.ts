@@ -11,6 +11,8 @@ export interface User {
   credentials: UserCredentials;
 
   role: Role;
+
+  favoriteBooks: Types.ObjectId[];
   ownedBooks: Types.ObjectId[];
 }
 
@@ -47,6 +49,12 @@ const userSchema = new Schema<User>({
       select: false,
     },
   },
+  favoriteBooks: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Book",
+    },
+  ],
   ownedBooks: [
     {
       type: Schema.Types.ObjectId,
