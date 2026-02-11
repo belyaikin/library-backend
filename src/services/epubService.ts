@@ -37,7 +37,7 @@ export const deleteEpubFile = async (fileName: string) => {
   const command = new DeleteObjectCommand({
     Bucket: config.bucket_name,
     Key: fileName,
-  })
+  });
 
   return await s3client.send(command);
 };
